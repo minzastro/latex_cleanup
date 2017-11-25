@@ -4,6 +4,11 @@ Check language in LaTeX file for consistency:
 2) Check British/American english
 
 TODO:
+
 3) Common style corrections from A&A
+
 4) Consistency in equations
 
+5) Automatic correction
+
+6) Highlight problems in text
