@@ -28,13 +28,14 @@ def load_aa_substitutes():
 
 
 class LaTeXhelper(object):
-    def __init__(self):
+    def __init__(self, args):
         self.aa_subs = load_aa_substitutes()
         self.us_uk = []
         for line in open('en_us_uk.txt', 'r').readlines():
             self.us_uk.append(line.split())
         self.splitter = re.compile(r'[ .,;:()*]', flags=re.IGNORECASE)
         self.words = set()
+        self.args = args
 
     def search_aa_subs(self, line):
         for re_from, _, _, s_to, comment in self.aa_subs:
@@ -53,7 +54,8 @@ class LaTeXhelper(object):
             warr = self.splitter.split(line.strip().lower())
             warr = [s for s in warr if len(s) > 3]
             self.words |= set(warr)
-            self.search_aa_subs(line)
+            if self.args.aanda:
+                self.search_aa_subs(line)
         for word in self.words:
             if '-' in word:
                 if word.replace('-', '') in self.words:
@@ -67,11 +69,12 @@ def main():
     parser = argparse.ArgumentParser(description="""
     Tool for age deconvolution with GMM method.
     """, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('-i', '--input', type=str, default=None,
-                        help='Input data filename')
+    parser.add_argument('-aa', '--aanda', action="store_true",
+                        default=False,
+                        help='Use A&A style recommendations')
     parser.add_argument('otherthings', nargs='*')
     args = parser.parse_args()
-    latex = LaTeXhelper()
+    latex = LaTeXhelper(args)
     latex.process_file(args.otherthings[0])
     #parser.add_argument('-o', '--output', type=str, default=None,
     #                    help='Output filename')
