@@ -23,4 +23,4 @@ class BasicCheck(object):
         raise NotImplemented
 
     def latex_check(self, document):
-        raise NotImplemented
+        return document.out_text
