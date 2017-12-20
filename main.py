@@ -11,9 +11,6 @@ def main():
     """, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-c', '--check', type=str, default=None,
                         help='List of checks to apply (default: all)')
-    parser.add_argument('-aa', '--aanda', action="store_true",
-                        default=False,
-                        help='Use A&A style recommendations')
     parser.add_argument('-f', '--full', action="store_true",
                         default=False,
                         help='Run full check, highlight problems in text')

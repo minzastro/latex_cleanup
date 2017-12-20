@@ -20,15 +20,15 @@ def load_aa_substitutes():
                 re_to = re_to.replace('Y', '\\3')
         return [re_from, re_to]
     substitutes = []
-    for line in open('aa_language.tsv', 'r').readlines():
-        sline = line.strip().split('\t')
+    for line in open('aa_language.dat', 'r').readlines():
+        sline = line.strip().split('|')
         if len(sline) > 2:
-            if ';' in sline[1]:
-                for pline in sline[1].split(';'):
-                    substitutes.append(turn_to_re(pline.strip(), sline[2]) +
+            if ';' in sline[0]:
+                for pline in sline[0].split(';'):
+                    substitutes.append(turn_to_re(pline.strip(), sline[1]) +
                                        sline[1:])
             else:
-                substitutes.append(turn_to_re(*sline[1:3]) + sline[1:])
+                substitutes.append(turn_to_re(*sline[:2]) + sline[1:])
     return substitutes
 
 
@@ -41,13 +41,21 @@ class AACheck(BasicCheck):
 
     def simple_check(self, document):
         for line in document.text:
-            for re_from, _, _, s_to, comment in self.aa_subs:
-                search = re.search(re_from, line)
+            for re_from,__, s_to, comment in self.aa_subs:
+                search = re.search(re_from, line, flags=re.I)
                 if search is not None:
                     self.logger.warning(f'"{search[0]}" used, "{s_to}" recommended, {comment}')
 
     def apply_aa_subs(self, line):
-        for re_from, re_to, _, _, _ in self.aa_subs:
+        for re_from, re_to, _, _ in self.aa_subs:
             line = re.sub(re_from, re_to, line, flags=re.IGNORECASE)
         return line
+
+    def latex_check(self, document):
+        cache = []
+        for line in document.out_text:
+            for re_from, re_to, _, _ in self.aa_subs:
+                line = re.sub(re_from, re_to, line, flags=re.IGNORECASE)
+            cache.append(line)
+        return cache
 

@@ -27,5 +27,5 @@ class HyphenCheck(BasicCheck):
         cache = []
         for line in document.out_text:
             for w in warn_words:
-                cache.append(re.sub(w, r'!!!\1!!!', line))
+                cache.append(re.sub(w, r'{\color{red}\1}', line))
         return cache
