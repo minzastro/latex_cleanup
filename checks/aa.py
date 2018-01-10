@@ -10,7 +10,7 @@ import re
 
 def load_aa_substitutes():
     def turn_to_re(s_from, s_to):
-        re_from = r'(%s)' % re.sub(r'(\.|\(|\))', r'\\\1', s_from)
+        re_from = r'(\b%s)' % re.sub(r'(\.|\(|\))', r'\\\1', s_from)
         re_to = r'{\color{red}\1}{\color{blue} %s}' % re.sub(r'(\.|\(|\))', r'\\\1', s_to)
         if 'X' in re_from:
             re_from = re_from.replace('X', '([\S]*)')
@@ -40,11 +40,11 @@ class AACheck(BasicCheck):
         self.aa_subs = load_aa_substitutes()
 
     def simple_check(self, document):
-        for line in document.text:
+        for iline, line in enumerate(document.text):
             for re_from,__, s_to, comment in self.aa_subs:
                 search = re.search(re_from, line, flags=re.I)
                 if search is not None:
-                    self.logger.warning(f'"{search[0]}" used, "{s_to}" recommended, {comment}')
+                    self.logger.warning(f'Line {iline}: "{search[0]}" used, "{s_to}" recommended, {comment}')
 
     def apply_aa_subs(self, line):
         for re_from, re_to, _, _ in self.aa_subs:
