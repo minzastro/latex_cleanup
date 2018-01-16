@@ -7,6 +7,7 @@ Created on Thu Dec  7 12:22:45 2017
 """
 from latex_cleanup.checks.basic import BasicCheck
 import re
+from os import path
 
 def load_aa_substitutes():
     def turn_to_re(s_from, s_to):
@@ -20,7 +21,8 @@ def load_aa_substitutes():
                 re_to = re_to.replace('Y', '\\3')
         return [re_from, re_to]
     substitutes = []
-    for line in open('aa_language.dat', 'r').readlines():
+    for line in open(path.join(path.dirname(__file__),
+                               'aa_language.dat'), 'r').readlines():
         sline = line.strip().split('|')
         if len(sline) > 2:
             if ';' in sline[0]:
