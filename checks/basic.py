@@ -6,7 +6,7 @@ Created on Thu Dec  7 12:00:57 2017
 @author: mints
 """
 import logging
-import os
+from os import path
 import json
 
 
@@ -23,8 +23,8 @@ class BasicCheck(object):
         self.config = self.load_config()
 
     def load_config(self):
-        conf_name = '%s.conf' % __file__[:-3]
-        if os.path.exists(conf_name):
+        conf_name = path.join(path.dirname(__file__), '%s.conf' % self.NAME)
+        if path.exists(conf_name):
             return json.load(open(conf_name))
         else:
             return {}

@@ -5,7 +5,7 @@ Created on Thu Dec  7 12:35:27 2017
 
 @author: mints
 """
-
+import re
 from latex_cleanup.checks.basic import BasicCheck
 
 
@@ -22,3 +22,22 @@ class EnUsUkCheck(BasicCheck):
         for us_word, uk_word in self.us_uk:
             if us_word in document.words and uk_word in document.words:
                 self.logger.warning(f"both {us_word} and {uk_word} are used")
+            if self.config['language'] == 'UK' and us_word in document.words:
+                self.logger.warning(f"{us_word} used in UK-style document")
+            elif self.config['language'] == 'US' and uk_word in document.words:
+                self.logger.warning(f"{uk_word} used in US-style document")
+
+    def latex_check(self, document):
+        cache = []
+        regexp = []
+        lines = ''.join(document.out_text)
+        for us_word, uk_word in self.us_uk:
+            if self.config['language'] == 'UK':
+                lines = re.sub(r'([^\\])\b(%s)\b' % us_word,
+                               r'\1{\color{red}\2}{\color{blue} %s}' % uk_word,
+                               lines, re.I)
+            else:
+                lines = re.sub(r'([^\\])\b(%s)\b' % uk_word,
+                               r'{\1\color{red}\2}{\color{blue} %s}' % us_word,
+                               lines, re.I)
+        return ['%s\n' % line for line in lines.split('\n')]
