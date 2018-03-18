@@ -28,7 +28,7 @@ class BasicCheck(object):
             return json.load(open(conf_name))
         else:
             return {}
-            
+
     def simple_check(self, document):
         raise NotImplemented
 

@@ -28,16 +28,20 @@ class EnUsUkCheck(BasicCheck):
                 self.logger.warning(f"{uk_word} used in US-style document")
 
     def latex_check(self, document):
-        cache = []
-        regexp = []
         lines = ''.join(document.out_text)
         for us_word, uk_word in self.us_uk:
             if self.config['language'] == 'UK':
                 lines = re.sub(r'([^\\])\b(%s)\b' % us_word,
-                               r'\1{\color{red}\2}{\color{blue} %s}' % uk_word,
+                               r'\1{\color{%s}\2}{\color{%s} %s}' %
+                                   (self.config['color1'],
+                                    self.config['color2'],
+                                    uk_word),
                                lines, re.I)
             else:
                 lines = re.sub(r'([^\\])\b(%s)\b' % uk_word,
-                               r'{\1\color{red}\2}{\color{blue} %s}' % us_word,
+                               r'\1{\color{%s}\2}{\color{%s} %s}' %
+                                   (self.config['color1'],
+                                    self.config['color2'],
+                                    us_word),
                                lines, re.I)
         return ['%s\n' % line for line in lines.split('\n')]
