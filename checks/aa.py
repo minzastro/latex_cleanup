@@ -15,7 +15,7 @@ class AACheck(BasicCheck):
 
     def __init__(self):
         super(AACheck, self).__init__()
-        self.aa_subs = load_aa_substitutes()
+        self.aa_subs = self.load_aa_substitutes()
 
     def load_aa_substitutes(self):
         """
