@@ -29,7 +29,7 @@ def main():
     for key, _class in checkers.items():
         check = _class()
         if args.full:
-            print(key, len(latex.out_text))
+            print('%',  key, len(latex.out_text))
             latex.out_text = check.latex_check(latex)
         else:
             check.simple_check(latex)

@@ -31,17 +31,17 @@ class EnUsUkCheck(BasicCheck):
         lines = ''.join(document.out_text)
         for us_word, uk_word in self.us_uk:
             if self.config['language'] == 'UK':
-                lines = re.sub(r'([^\\])\b(%s)\b' % us_word,
-                               r'\1{\color{%s}\2}{\color{%s} %s}' %
+                lines = re.sub(r'([^\\\{])\b(%s)\b' % us_word,
+                               r'\1{\\color{%s}\2}{\\color{%s} %s}' %
                                    (self.config['color1'],
                                     self.config['color2'],
                                     uk_word),
-                               lines, re.I)
+                               lines, flags=re.I)
             else:
-                lines = re.sub(r'([^\\])\b(%s)\b' % uk_word,
-                               r'\1{\color{%s}\2}{\color{%s} %s}' %
+                lines = re.sub(r'([^\\][^\{])\b(%s)\b' % uk_word,
+                               r'\1{\\color{%s}\2}{\\color{%s} %s}' %
                                    (self.config['color1'],
                                     self.config['color2'],
                                     us_word),
-                               lines, re.I)
+                               lines, flags=re.I)
         return ['%s\n' % line for line in lines.split('\n')]

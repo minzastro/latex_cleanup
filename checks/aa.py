@@ -26,7 +26,7 @@ class AACheck(BasicCheck):
         """
         def turn_to_re(s_from, s_to):
             re_from = r'(\b%s)' % re.sub(r'(\.|\(|\))', r'\\\1', s_from)
-            re_to = r'{\color{red}\1}{\color{blue} %s}' % re.sub(r'(\.|\(|\))', r'\\\1', s_to)
+            re_to = r'{\\color{red}\1}{\\color{blue} %s}' % re.sub(r'(\.|\(|\))', r'\\\1', s_to)
             if 'X' in re_from:
                 re_from = re_from.replace('X', '([\S]*)')
                 re_to = re_to.replace('X', '\\2')
