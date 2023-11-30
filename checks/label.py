@@ -17,9 +17,9 @@ class LabelCheck(BasicCheck):
 
     def simple_check(self, document):
         labels = set(re.findall(r'\\label\{([\w:]+)\}', ' '.join(document.text)))
-        refs = set(re.findall(r'\\\w+ref\{([\w:]+)\}', ' '.join(document.text)))
+        refs = set(re.findall(r'\\\w*ref\{([\w:]+)\}', ' '.join(document.text)))
         for item in refs - labels:
-             self.logger.warning("Reference without label: %s" % item)
+             self.logger.error("Reference without label: %s" % item)
         for item in labels - refs:
              self.logger.warning("Label without reference: %s" % item)
 

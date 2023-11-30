@@ -25,6 +25,8 @@ judgment judgement
 labeled labelled
 leukemia leukaemia
 liter litre
+maximize maximise
+minimize minimise
 prioritize prioritise
 signaling signalling
 skillful skilful
