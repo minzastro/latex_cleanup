@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Check for TODO items left in text.
 Created on Thu Dec  7 12:35:27 2017
 
 @author: mints

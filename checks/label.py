@@ -8,7 +8,10 @@ Created on 23.11.2023
 import re
 from latex_cleanup.checks.basic import BasicCheck
 
-
+"""
+Check for unreferenced labels and references to
+missing labels.
+"""
 class LabelCheck(BasicCheck):
     NAME = 'Label'
 

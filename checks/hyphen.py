@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Check for using same word with and without hyphen,
+like 'stray-light' and 'straylight'.
+
 Created on Thu Dec  7 12:01:57 2017
 
 @author: mints
