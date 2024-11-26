@@ -8,7 +8,7 @@ Created on Thu Dec  7 11:58:31 2017
 import re
 
 
-class LaTeXloader(object):
+class LaTeXloader:
     def __init__(self, filename):
         self.splitter = re.compile(r'[ ._,;:(){}*]', flags=re.IGNORECASE)
         self.words = set()

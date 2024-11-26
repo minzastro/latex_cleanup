@@ -9,6 +9,7 @@ Created on Mon Aug 12 13:21:45 2019
 import re
 from latex_cleanup.checks.basic import BasicCheck
 
+
 def count_upper(s):
     return sum(1 for c in s if c.isupper())
 

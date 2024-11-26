@@ -10,6 +10,7 @@ from latex_cleanup.checks.basic import BasicCheck
 import re
 from os import path
 
+
 class AACheck(BasicCheck):
     NAME = 'AA'
 
@@ -52,7 +53,7 @@ class AACheck(BasicCheck):
         Print report on found problems only.
         """
         for iline, line in enumerate(document.text):
-            for re_from,__, s_to, comment in self.aa_subs:
+            for re_from, __, s_to, comment in self.aa_subs:
                 search = re.search(re_from, line, flags=re.I)
                 if search is not None:
                     self.logger.warning(f'Line {iline}: "{search[0]}" used, "{s_to}" recommended, {comment}')

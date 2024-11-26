@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+'''
+Check for unreferenced labels and references to
+missing labels.
 Created on 23.11.2023
 
 @author: mints
-"""
+'''
 import re
 from latex_cleanup.checks.basic import BasicCheck
 
-"""
-Check for unreferenced labels and references to
-missing labels.
-"""
+
 class LabelCheck(BasicCheck):
     NAME = 'Label'
 
@@ -22,8 +21,8 @@ class LabelCheck(BasicCheck):
         labels = set(re.findall(r'\\label\{([\w:]+)\}', ' '.join(document.text)))
         refs = set(re.findall(r'\\\w*ref\{([\w:]+)\}', ' '.join(document.text)))
         for item in refs - labels:
-             self.logger.error("Reference without label: %s" % item)
+            self.logger.error('Reference without label: %s' % item)
         for item in labels - refs:
-             self.logger.warning("Label without reference: %s" % item)
+            self.logger.warning('Label without reference: %s' % item)
 
 

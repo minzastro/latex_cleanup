@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+'''
 Check for mixing American and UK spellings.
 Created on Thu Dec  7 12:35:27 2017
 
 @author: mints
-"""
+'''
 import re
 from latex_cleanup.checks.basic import BasicCheck
 
@@ -22,11 +22,11 @@ class EnUsUkCheck(BasicCheck):
     def simple_check(self, document):
         for us_word, uk_word in self.us_uk:
             if us_word in document.words and uk_word in document.words:
-                self.logger.warning(f"both {us_word} and {uk_word} are used")
+                self.logger.warning(f'both {us_word} and {uk_word} are used')
             if self.config['language'] == 'UK' and us_word in document.words:
-                self.logger.warning(f"{us_word} used in UK-style document")
+                self.logger.warning(f'{us_word} used in UK-style document')
             elif self.config['language'] == 'US' and uk_word in document.words:
-                self.logger.warning(f"{uk_word} used in US-style document")
+                self.logger.warning(f'{uk_word} used in US-style document')
 
     def latex_check(self, document):
         lines = ''.join(document.out_text)

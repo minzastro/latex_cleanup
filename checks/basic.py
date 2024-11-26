@@ -10,7 +10,7 @@ from os import path
 import json
 
 
-class BasicCheck(object):
+class BasicCheck:
     NAME = 'basic'
 
     def __init__(self):
@@ -30,7 +30,7 @@ class BasicCheck(object):
             return {}
 
     def simple_check(self, document):
-        raise NotImplemented
+        raise NotImplementedError
 
     def latex_check(self, document):
         return document.out_text

@@ -17,16 +17,14 @@ class HyphenCheck(BasicCheck):
 
     def simple_check(self, document):
         for word in document.words:
-            if '-' in word:
-                if word.replace('-', '') in document.words:
-                    self.logger.warning(f"using {word} and {word.replace('-', '')}")
+            if '-' in word and word.replace('-', '') in document.words:
+                self.logger.warning(f"using {word} and {word.replace('-', '')}")
 
     def latex_check(self, document):
         warn_words = []
         for word in document.words:
-            if '-' in word:
-                if word.replace('-', '') in document.words:
-                    warn_words.append(r'\b(%s|%s)\b' % (word, word.replace('-', '')))
+            if '-' in word and word.replace('-', '') in document.words:
+                warn_words.append(r'\b(%s|%s)\b' % (word, word.replace('-', '')))
         cache = []
         for line in document.out_text:
             for w in warn_words:
