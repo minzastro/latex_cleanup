@@ -7,7 +7,7 @@ from latex_cleanup.loader import LaTeXloader
 
 def main():
     parser = argparse.ArgumentParser(description="""
-    Tool for age deconvolution with GMM method.
+    Tool to check LaTeX documents.
     """, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-c', '--check', type=str, default=None,
                         help='List of checks to apply (default: all)')
@@ -20,12 +20,13 @@ def main():
     checkers = {}
     for file in glob('checks/[a-z]*.py'):
         base_name = file.split('/')[1][:-3]
-        p = importlib.import_module(f"checks.{base_name}")
+        p = importlib.import_module(f'checks.{base_name}')
         for key, value in p.__dict__.items():
             if key[0] != '_' and key != 'BasicCheck' and isinstance(value, type):
                 checkers[value.NAME] = value
     if args.check is not None:
         checkers = {k: v for k, v in checkers.items() if k in args.check.split(',')}
+    print('Applying checkers: %s' % ', '.join(checkers.keys()))
     for key, _class in checkers.items():
         check = _class()
         if args.full:
