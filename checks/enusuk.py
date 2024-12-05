@@ -27,6 +27,13 @@ class EnUsUkCheck(BasicCheck):
                 self.logger.warning(f'{us_word} used in UK-style document')
             elif self.config['language'] == 'US' and uk_word in document.words:
                 self.logger.warning(f'{uk_word} used in US-style document')
+        
+        for word in document.words:
+            if self.config['language'] == 'UK' and (word.endswith('ize') or word.endswith('yze')):
+                self.logger.warning(f'{word} used in UK-style document')
+            elif self.config['language'] == 'US' and (word.endswith('ise') or word.endswith('yse')):
+                self.logger.warning(f'{word} used in US-style document')
+                
 
     def latex_check(self, document):
         lines = ''.join(document.out_text)

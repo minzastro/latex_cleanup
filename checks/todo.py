@@ -17,6 +17,6 @@ class TodoCheck(BasicCheck):
         super(TodoCheck, self).__init__()
 
     def simple_check(self, document):
-        for todo in re.findall(r'todo:([^.]*)\.', ' '.join(document.text), flags=re.IGNORECASE):
-             self.logger.error("TODO: %s" % todo)
-
+        for todo in re.findall(r'todo:([^.;\n]*)[;\.\n]', ' '.join(document.text),
+                               flags=re.IGNORECASE):
+            self.logger.error('TODO: %s' % todo)
